@@ -57,7 +57,7 @@ function jsLint(){
 var processors = [
     stylefmt,
     sorting,
-    stylelint({failAfterError: true}),
+    stylelint({failAfterError: false}),
     reporter({ clearMessages: true }),
 ];
 

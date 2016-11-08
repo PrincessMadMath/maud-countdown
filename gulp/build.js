@@ -35,7 +35,7 @@ gulp.task('build:compile', gulp.series(
 // Different operation to do on basic files: minify, autoprefixer,...
 gulp.task('build:build', gulp.series(
   cleanBuild,
-  gulp.parallel(buildHtml, buildScript, buildCss, buildImages)
+  gulp.parallel(buildHtml, buildScript, buildCss, buildImages, copyAssets)
 ));
 
 // Any task that need to be perform on "final" files
@@ -54,6 +54,7 @@ gulp.task('update:css', gulp.series(copyCss, buildCss, postBuildConcat));
 gulp.task('update:sass', gulp.series(compileSass, buildCss, postBuildConcat));
 gulp.task('update:js', gulp.series(copyScript, buildScript, postBuildConcat));
 gulp.task('update:image', gulp.series(copyImages, buildImages));
+gulp.task('update:assets', copyAssets);
 
 
 /*************** Utils function ***************/
@@ -146,6 +147,14 @@ function buildScript() {
 
     return gulp.src(glob)
     .pipe(gulpif(config.run.js.uglify, uglify(config.plugin.js.uglify)))
+    .pipe(gulp.dest(dest));
+}
+
+function copyAssets(){
+    var glob = config.prefixGlob(config.paths.src,config.paths.glob.assets);
+    var dest = config.paths.dist + config.paths.dest.assets;
+
+    return gulp.src(glob)
     .pipe(gulp.dest(dest));
 }
 

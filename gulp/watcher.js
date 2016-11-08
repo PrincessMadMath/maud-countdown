@@ -6,7 +6,7 @@ var browserSync = require('browser-sync').create();
 
 
 /*************** Task definition ***************/
-gulp.task('server', gulp.series('build', gulp.parallel('lint:watch', watchBuild, watchServer, startServer)));
+gulp.task('server', gulp.series('build', gulp.parallel(watchBuild, watchServer, startServer)));
 
 
 /*************** Watcher functions (change -> build) ***************/
@@ -18,12 +18,14 @@ function watchBuild() {
     var image_glob = config.prefixGlob(config.paths.src, config.paths.glob.images);
     var sass_glob = config.prefixGlob(config.paths.src, config.paths.glob.sass);
     var css_glob = config.prefixGlob(config.paths.src, config.paths.glob.css);
+    var assets_glob = config.prefixGlob(config.paths.src, config.paths.glob.assets);
 
     gulp.watch(html_glob, gulp.series('update:html'));
     gulp.watch(js_glob, gulp.series('update:js'));
     gulp.watch(image_glob, gulp.series('update:image'));
     gulp.watch(sass_glob, gulp.series('update:sass'));
     gulp.watch(css_glob, gulp.series( 'update:css'));
+    gulp.watch(assets_glob, gulp.series( 'update:assets'));
 }
 
 // When change occurs in /build we want to notify the server (reload or inject)
@@ -32,11 +34,13 @@ function watchServer() {
     var js_glob = config.prefixGlob(config.paths.dist,config.paths.glob.js);
     var image_glob = config.prefixGlob(config.paths.dist,config.paths.glob.images);
     var css_glob = config.prefixGlob(config.paths.dist,config.paths.glob.css);
+    var assets_glob = config.prefixGlob(config.paths.dist, config.paths.glob.assets);
 
     gulp.watch(html_glob, reload);
     gulp.watch(js_glob, reload);
     gulp.watch(image_glob, reload);
     gulp.watch(css_glob,  injectCss);
+    gulp.watch(assets_glob,  reload);
 }
 
 /*************** Browsersync helper function ***************/
