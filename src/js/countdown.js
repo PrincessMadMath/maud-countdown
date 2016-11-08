@@ -1,6 +1,62 @@
-/* Long comment Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi posuere tellus elit, sed tincidunt turpis maximus sit amet. Vivamus ullamcorper nulla purus, ut bibendum purus fringilla at. Pellentesque a mi nec turpis consequat gravida. Vestibulum ut justo viverra, maximus tellus sit amet, congue tortor. Sed vel luctus orci, ut eleifend ipsum. Morbi vitae libero maximus, laoreet tortor et, posuere purus. Ut faucibus ex nec sapien egestas bibendum. */
-function sayHello() {
-    //console.log("Hello");
+// Based on : https://www.sitepoint.com/build-javascript-countdown-timer-no-dependencies/
+
+// Respecting the ISO 8601 format
+var deadline = '2016-11-12T23:59:59-05:00';
+
+
+/********* Calculate remaining time *********/
+
+function getTimeRemaining(endTime)
+{
+    var remainingMilliseconds = new Date(endTime) - new Date();
+
+    var centiseconds  = Math.floor(remainingMilliseconds / 10 % 100);
+    var seconds = Math.floor((remainingMilliseconds/1000) % 60);
+    var minutes = Math.floor((remainingMilliseconds/ (1000 * 60) % 60));
+    var hours = Math.floor((remainingMilliseconds / (1000 * 60 * 60) % 24));
+    var days = Math.floor((remainingMilliseconds / (1000 * 60 * 60 * 24)));
+
+    return {
+        'total' : remainingMilliseconds,
+        'days' : days,
+        'hours' : hours,
+        'minutes' : minutes,
+        'seconds' : seconds,
+        'centiseconds' : centiseconds
+    };
 }
 
-sayHello();
+
+function initializeClock(id, endTime){
+    var clock = document.getElementById(id);
+
+    var daysSpan = clock.querySelector('.days');
+    var hoursSpan = clock.querySelector('.hours');
+    var minutesSpan = clock.querySelector('.minutes');
+    var secondsSpan = clock.querySelector('.seconds');
+    var centisecondSpan = clock.querySelector('.centiseconds');
+
+    function updateClock(){
+
+        var remainingTime = getTimeRemaining(endTime);
+
+        daysSpan.innerHTML = remainingTime.days;
+        hoursSpan.innerHTML = ('0' + remainingTime.hours).slice(-2);
+        minutesSpan.innerHTML = ('0' + remainingTime.minutes).slice(-2);
+        secondsSpan.innerHTML = ('0' + remainingTime.seconds).slice(-2);
+        centisecondSpan.innerHTML = ('0' + remainingTime.centiseconds).slice(-2);
+        
+        if(remainingTime.total <= 0)
+        {
+            clearInterval(time_interval);
+            clock.innerHTML = "Password: potato123456789";
+        }
+    }
+
+    updateClock();
+    var time_interval = setInterval(updateClock, 10);
+
+}
+
+
+initializeClock('clockdiv', deadline);
