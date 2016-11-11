@@ -1,7 +1,7 @@
 // Based on : https://www.sitepoint.com/build-javascript-countdown-timer-no-dependencies/
 
 // Respecting the ISO 8601 format
-var deadline = '2016-11-12T23:59:59-05:00';
+var deadline = '2016-11-12T00:00:00-05:00';
 
 
 /********* Calculate remaining time *********/
@@ -50,6 +50,11 @@ function initializeClock(id, endTime){
         {
             clearInterval(time_interval);
             clock.innerHTML = "Password: potato123456789";
+
+            var finalCountDown = document.getElementById("final"); 
+            finalCountDown.pause();
+            var happyBirthday = document.getElementById("happy");
+            happyBirthday.play() 
         }
     }
 

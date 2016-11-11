@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PrincessMadMath/helloworld-gulp-starter.git"
+    "url": "git+https://github.com/PrincessMadMath/maud-countdown.git"
   },
   "keywords": [
     "gulp",
@@ -17,9 +17,9 @@
   "author": "Mathieu Gamache",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/PrincessMadMath/helloworld-gulp-starter/issues"
+    "url": "https://github.com/PrincessMadMath/maud-countdown/issues"
   },
-  "homepage": "https://github.com/PrincessMadMath/helloworld-gulp-starter#readme",
+  "homepage": "https://github.com/PrincessMadMath/maud-countdown#readme",
   "devDependencies": {
     "autoprefixer": "^6.5.1",
     "browser-sync": "^2.17.3",
